@@ -34,14 +34,71 @@ def check_cloudflare(domains):
 
 def save_to_html(results):
     with open('results.html', 'w') as f:
-        f.write('<html><body>')
-        f.write('<div style="text-align:center;"><img src="logo.png" alt="Logo"></div>')
-        f.write('<table border="1" style="margin: 0 auto;">')
-        f.write('<tr><th>Domain</th><th>On Cloudflare</th></tr>')
+        f.write('''
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f0f0f0;
+                    color: #333;
+                }
+                .container {
+                    width: 60%;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 20px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    margin-top: 50px;
+                }
+                .logo {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                .logo img {
+                    max-width: 100%;
+                    height: auto;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                table, th, td {
+                    border: 1px solid #ccc;
+                }
+                th, td {
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f4f4f4;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo">
+                </div>
+                <table>
+                    <tr>
+                        <th>Domain</th>
+                        <th>On Cloudflare</th>
+                    </tr>
+        ''')
+        
         for domain, is_on_cloudflare in results.items():
             if is_on_cloudflare == True:
                 f.write(f'<tr><td>{domain}</td><td>{is_on_cloudflare}</td></tr>')
-        f.write('</table></body></html>')
+        
+        f.write('''
+                </table>
+            </div>
+        </body>
+        </html>
+        ''')
 
 # Read domains from a text file and store them in a list
 with open('domains.txt', 'r') as f:
